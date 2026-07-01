@@ -31,7 +31,7 @@ The system is designed as a **Single Page Application (SPA)** to ensure fast nav
 - **JavaScript (ES6+)** – Application logic and validation
 
 Folder Structure
-MarginLens (Frontend Project)
+```MarginLens (Frontend Project)
 │
 ├── index.html
 ├── package.json
@@ -79,6 +79,7 @@ MarginLens (Frontend Project)
         ├── main.css
         └── logo.svg
 ---
+```
 
 ## ⚙️ Features
 
