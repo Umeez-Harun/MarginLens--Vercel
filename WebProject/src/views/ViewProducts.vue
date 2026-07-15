@@ -2,24 +2,50 @@
 import router from '@/router';
 import axios from 'axios';
 import { ref, reactive, onMounted} from 'vue'
+import LoaderComponent from '@/components/icons/LoaderComponent.vue';
 
 const products = ref([])
 const categories = ref([])
 const isLoading = ref(false)
 
 async function loadProducts(){
-  const res = await axios.get('http://localhost:3000/products')
-  products.value = res.data
+  try{
+    isLoading.value = true
+    const res = await axios.get('http://localhost:3000/products')
+    isLoading.value = false
+    products.value = res.data
+  }
+  catch(err){
+    console.log(err)
+  }
+  finally{
+    isLoading.value = false
+  }
 }
 
 onMounted(() => {
   loadProducts()
 })
-</script>
 
+async function deleteProduct(id){
+  try{
+    isLoading.value = true
+    const res = await axios.delete(`http://localhost:3000/product/delete/${id}`)
+    isLoading.value = false
+  }
+  catch(err){
+    console.log(err)
+    isLoading.value = false
+  }
+  finally{
+    isLoading.value = false
+  }
+}
+</script>
 
 <template>
     <div class="container">
+      <LoaderComponent v-if="isLoading" />
       <div class="page-header">
         <h1>Products</h1>
         <RouterLink to="/product/create" class="btn btn-primary">+ Add Product</RouterLink>
@@ -49,8 +75,8 @@ onMounted(() => {
               <td>{{ product.currencyCode }}</td>
                 <td class="actions">
                   <RouterLink :to="`/product/edit/${product.id}`" class="btn-action btn-edit">Edit</RouterLink>
-                  <RouterLink class="btn-action btn-report">Report</RouterLink>
-                  <RouterLink class="btn-action btn-delete">Delete</RouterLink>
+                  <RouterLink :to="`/product/report/${product.id}`" class="btn-action btn-report">Report</RouterLink>
+                  <button @click="deleteProduct(product.id)" class="btn-action btn-delete">Delete</button>
               </td>
             </tr>
           </tbody>

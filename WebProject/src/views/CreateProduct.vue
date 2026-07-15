@@ -31,8 +31,18 @@ const isLoading = ref(false)
 const categories = ref<Category[]>([])
 
 async function CreateProduct(){
-  const res = await axios.post('http://localhost:3000/products/add', product)
-  router.push(`/cost-profile/${res.data.id}`)
+  try{
+    isLoading.value = true
+    const res = await axios.post('http://localhost:3000/products/add', product)
+    isLoading.value = false
+    router.push(`/cost-profile/${res.data.id}`)
+  }
+  catch(err){
+    console.log(err)
+  }
+  finally{
+    isLoading.value = false
+  }
 }
 
 async function loadCategories(){

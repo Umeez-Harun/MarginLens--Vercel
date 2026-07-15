@@ -1,27 +1,49 @@
 <script setup>
-import { reactive } from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
+import LoaderComponent from '@/components/icons/LoaderComponent.vue';
 
 const product = reactive({
-  name: '',
+  name: null,
   categoryId: null,
   sellingPrice: null,
   purchaseCost: null,
-  currencyCode: '',
+  currencyCode: null,
 })
-
+const isLoading = ref(false)
 const route = useRoute();
 const product_id = route.params.id;
 
+const categories = ref([])
+async function loadCategories(){
+
+  const res = await axios.get('http://localhost:3000/categories')
+  categories.value = res.data
+}
+onMounted(() => {
+  loadCategories()
+})
 async function EditProduct(){
-  const res = await axios.put(`http://localhost:3000/product/update/${product_id}`, product)
-  console.log(res.status)
+  try{
+    isLoading.value = true
+    const res = await axios.put(`http://localhost:3000/product/update/${product_id}`, product)
+    isLoading.value = false
+    console.log(res.status)
+  }
+  catch(err){
+    console.log(err)
+    isLoading.value = false
+  }
+  finally{
+    isLoading.value = false
+  }
 }
 </script>
 
 <template>
     <div class="container">
+      <LoaderComponent v-if="isLoading"></LoaderComponent>
       <div class="page-header">
         <h1>Edit Product</h1>
         <a href="/products" class="btn btn-outline">Back to Products</a>
@@ -32,12 +54,15 @@ async function EditProduct(){
       <div class="card" id="formCard">
         <div class="form-group">
           <label>Product Name</label>
-          <input type="text" id="name" v-model="product.name" />
+          <input type="text" id="name" v-model="product.name"/>
         </div>
 
         <div class="form-group">
           <label>Category</label>
-          <select id="categoryId" v-model="product.category"></select>
+          <select id="categoryId" v-model="product.categoryId">
+            <option disabled>Select Category</option>
+            <option v-for="cat in categories" :value="cat.id ">{{ cat.name }}</option>
+          </select>
         </div>
 
         <div class="form-row">

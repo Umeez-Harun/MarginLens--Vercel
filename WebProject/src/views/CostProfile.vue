@@ -26,13 +26,12 @@ const errors = reactive({
 })
 const isLoading = ref(false)
 
-async function saveCost(){
+async function saveAndCalculateCost(){
   try{
-    console.log(product_id)
     isLoading.value = true
     const res = await axios.post(`http://localhost:3000/product/cost-profile/add/${product_id}`, cost)
-    router.push(`http://localhost:3000/report/product/${product_id}`)
     console.log(res.status)
+    router.push(`/report/product/${product_id}`)
 }
   catch(err){
     console.log(product_id)
@@ -43,11 +42,7 @@ async function saveCost(){
     isLoading.value = false
   }
 }
-async function calculateCost(){
-  isLoading.value = true
-  await new Promise(resolve => setTimeout(resolve, 3000))
-  isLoading.value = false
-}
+
 </script>
 
 <template>
@@ -141,10 +136,7 @@ async function calculateCost(){
         </div>
 
         <div class="actions">
-          <button @click="saveCost()" class="btn btn-primary">
-            Save Cost Profile
-          </button>
-          <button @click="calculateCost()" class="btn btn-success" id="calcBtn">
+          <button @click="saveAndCalculateCost()" class="btn btn-success" id="calcBtn">
             Save & Calculate
           </button>
         </div>

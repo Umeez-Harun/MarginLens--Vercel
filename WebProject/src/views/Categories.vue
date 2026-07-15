@@ -1,5 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted} from 'vue'
+import LoaderComponent from '@/components/icons/LoaderComponent.vue'
 import { ValidateCategory } from '@/Validators/Validator'
 import axios from 'axios'
 
@@ -24,14 +25,23 @@ async function loadCategories(){
 }
 
 onMounted(() => {
-  loadCategories();
+  try{
+    isLoading.value = true
+    loadCategories();
+  }
+  catch(err){
+    console.log(err)
+  }
+  finally{
+    isLoading.value = false
+  }
 }) 
 </script>
 
 <template>
     <div class="container">
+      <LoaderComponent v-if="isLoading"/>
       <h1>Categories</h1>
-
       <div id="alert"></div>
 
       <div class="card">
