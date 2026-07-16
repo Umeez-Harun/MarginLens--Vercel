@@ -110,7 +110,10 @@ app.get('/products/ranked', async (req, res) => {
 })
 const PORT = 3000;
 
-app.listen(PORT, async () => {
-    await connectDB();
-    console.log(`Server running on http://localhost:${PORT}`);
-});
+//app.listen(PORT, async () => {
+//    await connectDB();
+//    console.log(`Server running on http://localhost:${PORT}`);
+//});
+connectDB()
+
+module.exports = app;
