@@ -7,7 +7,7 @@ const report = ref({})
 const route = useRoute()
 const product_id = route.params.id
 async function getReport(){
-  const res = await api.get(`https://margin-lens-backend.vercel.app/product/report/${product_id}`)
+  const res = await axios.get(`https://margin-lens-backend.vercel.app/product/report/${product_id}`)
   report.value = res.data
 }
 
