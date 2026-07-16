@@ -1,13 +1,13 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import { onMounted, ref } from 'vue'
-import axios from 'axios'
+import axios from 'axios';
 
 const report = ref({})
 const route = useRoute()
 const product_id = route.params.id
 async function getReport(){
-  const res = await axios.get(`http://localhost:3000/product/report/${product_id}`)
+  const res = await api.get(`https://margin-lens-backend.vercel.app/product/report/${product_id}`)
   report.value = res.data
 }
 

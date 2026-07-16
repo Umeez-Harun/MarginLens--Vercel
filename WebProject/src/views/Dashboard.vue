@@ -7,7 +7,7 @@ const products = ref([])
 const isLoading = ref(false)
 
 async function loadRankedProducts(){
-  const res = await axios.get('http://localhost:3000/products/ranked')
+  const res = await axios.get('https://margin-lens-backend.vercel.app/products/ranked')
   products.value = res.data
 }
 onMounted(() => {

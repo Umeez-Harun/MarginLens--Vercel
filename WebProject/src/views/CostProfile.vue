@@ -29,7 +29,7 @@ const isLoading = ref(false)
 async function saveAndCalculateCost(){
   try{
     isLoading.value = true
-    const res = await axios.post(`http://localhost:3000/product/cost-profile/add/${product_id}`, cost)
+    const res = await axios.post(`https://margin-lens-backend.vercel.app/cost-profile/add/${product_id}`, cost)
     console.log(res.status)
     router.push(`/report/product/${product_id}`)
 }

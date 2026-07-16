@@ -14,14 +14,15 @@ const category = reactive({
 const error = ref('')
 
 async function addCategory(){
-    const res = await axios.post('http://localhost:3000/categories/add', category)
+    const res = await axios.post('https://margin-lens-backend.vercel.app/categories/add', category)
     console.log('Response', res.status)
  
 }
 
 async function loadCategories(){
-  const res = await axios.get('http://localhost:3000/categories')
+  const res = await axios.get('https://margin-lens-backend.vercel.app/categories')
   categories.value = res.data
+  console.log(res.data)
 }
 
 onMounted(() => {

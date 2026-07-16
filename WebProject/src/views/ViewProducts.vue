@@ -11,7 +11,7 @@ const isLoading = ref(false)
 async function loadProducts(){
   try{
     isLoading.value = true
-    const res = await axios.get('http://localhost:3000/products')
+    const res = await axios.get('https://margin-lens-backend.vercel.app/products')
     isLoading.value = false
     products.value = res.data
   }
@@ -30,7 +30,7 @@ onMounted(() => {
 async function deleteProduct(id){
   try{
     isLoading.value = true
-    const res = await axios.delete(`http://localhost:3000/product/delete/${id}`)
+    const res = await axios.delete(`https://margin-lens-backend.vercel.app/product/delete/${id}`)
     isLoading.value = false
   }
   catch(err){
@@ -69,7 +69,7 @@ async function deleteProduct(id){
           <tbody id="productTable">
             <tr v-for="product in products">
               <td>{{ product.name }}</td>
-              <td>{{ product.category.name }}</td>
+              <td>{{ product.category?.name }}</td>
               <td>{{ product.sellingPrice }}</td>
               <td>{{ product.purchaseCost }}</td>
               <td>{{ product.currencyCode }}</td>

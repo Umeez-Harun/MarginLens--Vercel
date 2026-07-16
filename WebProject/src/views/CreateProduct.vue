@@ -33,7 +33,7 @@ const categories = ref<Category[]>([])
 async function CreateProduct(){
   try{
     isLoading.value = true
-    const res = await axios.post('http://localhost:3000/products/add', product)
+    const res = await axios.post('https://margin-lens-backend.vercel.app/products/add', product)
     isLoading.value = false
     router.push(`/cost-profile/${res.data.id}`)
   }
@@ -47,7 +47,7 @@ async function CreateProduct(){
 
 async function loadCategories(){
 
-  const res = await axios.get('http://localhost:3000/categories')
+  const res = await axios.get('https://margin-lens-backend.vercel.app/categories')
   categories.value = res.data
 }
 

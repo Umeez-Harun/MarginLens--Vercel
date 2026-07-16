@@ -18,7 +18,7 @@ const product_id = route.params.id;
 const categories = ref([])
 async function loadCategories(){
 
-  const res = await axios.get('http://localhost:3000/categories')
+  const res = await axios.get('https://margin-lens-backend.vercel.app/categories')
   categories.value = res.data
 }
 onMounted(() => {
@@ -27,7 +27,7 @@ onMounted(() => {
 async function EditProduct(){
   try{
     isLoading.value = true
-    const res = await axios.put(`http://localhost:3000/product/update/${product_id}`, product)
+    const res = await axios.put(`https://margin-lens-backend.vercel.app/product/update/${product_id}`, product)
     isLoading.value = false
     console.log(res.status)
   }
